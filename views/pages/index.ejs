@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><%- include('../partials/head'); %></head>
+    <body>
+        <div id="body-container">
+            <header><%- include('../partials/header'); %></header>
+
+            <main>
+                <div class="container-fluid">
+                    <div class="text-center content-box">
+                        <h2>Welcome to Edidiong's simple to-do-list application</h2>
+                    </div>
+
+                    <div class="container-fluid border border-dark content-box rounded">
+                        <div class="border-bottom border-dark">
+                            <p>Here are your recent lists</p>
+                        </div>
+
+                        <!--Lists begins-->
+                        <div class="row" id="list-row">
+
+                            <!--Card-->
+                            <div class="card col-lg-3 col-md-6 col-sm-12 list-card" style="width: 18rem">
+                                <div class="card-header bg-dark text-white">
+                                    <h5 class="card-title text-center">Exams Completed</h5>
+                                </div>
+
+                                <!--List starts-->
+                                <div class="list-items">
+                                    <ul class="list-group list-group-flush" style="height: 15rem">
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="ent-201" autocomplete="off">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    ENT 201
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="sen-400" autocomplete="off" checked>
+                                                <label class="form-check-label" for="flexCheckChecked">
+                                                    SEN 400
+                                                </label>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="list-card-footer border-top border-dark text-end">
+                                    <button type="button" class="btn btn-outline-dark add-item-button">
+                                        <i class="fa-regular fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+            <footer><%- include('../partials/footer'); %></footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </body>
+</html>
