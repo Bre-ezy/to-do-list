@@ -13,6 +13,17 @@ async function getLists() {
     return await sendRequest("/lists");
 }
 
+async function addListItem(listID) {
+    const itemName = prompt("Input the item name");
+
+    if (itemName === null) {
+        return
+    }
+
+    console.log(await sendRequest(`/add-list-item?listID=${listID}&itemName=${itemName}`));
+    await resetUserLists();
+}
+
 // Toggles a list item checkbox
 async function toggleListItem(listID, listItemID, isDone) {
     console.log(await sendRequest(`/toggle-list-item?listID=${listID}&listItemID=${listItemID}&isDone=${isDone}`));
@@ -96,7 +107,11 @@ async function insertListCard(list) {
 
     let addListItemButton = document.createElement("button");
     addListItemButton.setAttribute("class", "btn btn-outline-dark add-item-button");
-    addListItemButton.innerHTML = `<i class="fa-regular fa-plus"></i>`
+    addListItemButton.innerHTML = `<i class="fa-regular fa-plus"></i>`;
+
+    addListItemButton.addEventListener('click', (event) => {
+        addListItem(list._id);
+    })
 
     cardFooter.appendChild(addListItemButton);
 
@@ -120,6 +135,11 @@ async function populateUserLists() {
     listArray.forEach((list) => {
         insertListCard(list);
     })
+}
+
+async function resetUserLists() {
+    dePopulateUserLists();
+    await populateUserLists();
 }
 
 window.addEventListener('load', async (event) => {

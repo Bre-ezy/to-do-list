@@ -33,4 +33,16 @@ export class database {
             }
         )
     }
+
+    static async addListItem(listID, itemName) {
+        return await this.listsCollection.updateOne(
+            {
+                _id: listID
+            },
+            {
+                $push: {listItems: {_id: new ObjectId(), name: itemName, done: false}}
+            }
+        )
+    }
 }
+

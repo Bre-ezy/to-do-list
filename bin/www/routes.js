@@ -35,5 +35,15 @@ export class routes {
 
             res.send(await database.toggleListItem(listID, listItemID, isDone));
         })
+
+        app.get('/add-list-item', async (req, res) => {
+            res.status(200);
+            res.type('json');
+
+            const listID = new ObjectId(req.query.listID);
+            const itemName = req.query.itemName;
+
+            res.send(await database.addListItem(listID, itemName));
+        })
     }
 }
