@@ -8,6 +8,14 @@
     padding-bottom: 30px;
 }
 
+#recent-list-text {
+    padding-bottom: 20px;
+}
+
+#new-list-button {
+    float: right;
+}
+
 #list-row {
     padding: 10px;
     margin-top: 10px;

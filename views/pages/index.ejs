@@ -1,60 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><%- include('../partials/head'); %></head>
+    <head>
+        <%- include('../partials/head'); %>
+    </head>
     <body>
         <div id="body-container">
-            <header><%- include('../partials/header'); %></header>
+            <header>
+                <%- include('../partials/header'); %>
+            </header>
 
             <main>
                 <div class="container-fluid">
                     <div class="text-center content-box">
-                        <h2>Welcome to Edidiong's to-do-list application</h2>
+                        <h2>Welcome to Edidiong's checklist application</h2>
                     </div>
 
                     <div class="container-fluid border border-dark content-box rounded">
-                        <div class="border-bottom border-dark">
-                            <p>Here are your recent lists</p>
+                        <div class="border-bottom border-dark" id="recent-list-text">
+                            Here are your recent lists
+                            <button class="btn btn-dark add-item-button" id="new-list-button">
+                                <i class="fa-regular fa-plus"></i> New List
+                            </button>
                         </div>
 
                         <!--Lists begins-->
-                        <div class="row" id="list-row">
-
-                            <!--Card-->
-                            <div class="card col-lg-3 col-md-6 col-sm-12 list-card" style="width: 18rem">
-                                <div class="card-header bg-dark text-white">
-                                    <h5 class="card-title text-center">Exams Completed</h5>
-                                </div>
-
-                                <!--List starts-->
-                                <div class="list-items">
-                                    <ul class="list-group list-group-flush" style="height: 15rem">
-                                        <li class="list-group-item">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="ent-201" autocomplete="off">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    ENT 201
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="sen-400" autocomplete="off" checked>
-                                                <label class="form-check-label" for="flexCheckChecked">
-                                                    SEN 400
-                                                </label>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-
-                                <div class="list-card-footer border-top border-dark text-end">
-                                    <button type="button" class="btn btn-outline-dark add-item-button">
-                                        <i class="fa-regular fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="row" id="list-row"></div>
                     </div>
                 </div>
 

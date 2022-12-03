@@ -6,7 +6,6 @@ async function sendRequest(path) {
         headers: {
             'Accept': 'application/json',
         },
-
     })).json()
 }
 
@@ -14,6 +13,12 @@ async function getLists() {
     return await sendRequest("/lists");
 }
 
+// Toggles a list item checkbox
+async function toggleListItem(listID, listItemID, isDone) {
+    console.log(await sendRequest(`/toggle-list-item?listID=${listID}&listItemID=${listItemID}&isDone=${isDone}`));
+}
+
+// Inserts a new list card
 async function insertListCard(list) {
     let card = document.createElement("div");
     card.setAttribute("class", "card col-lg-3 col-md-6 col-sm-12 list-card");
@@ -53,6 +58,14 @@ async function insertListCard(list) {
         listItemCheckBox.setAttribute("id", String(list.name + index));
         listItemCheckBox.setAttribute("autocomplete", "off");
 
+        listItemCheckBox.addEventListener("click", async (event) => {
+            const listID = list._id;
+            const listItemID = item._id;
+            const isDone = listItemCheckBox.checked;
+
+            await toggleListItem(listID, listItemID, isDone);
+        })
+
         if (item.done) {
             listItemCheckBox.setAttribute("checked", "true");
         }
@@ -79,7 +92,7 @@ async function insertListCard(list) {
     card.appendChild(listOfItemsBox);
 
     let cardFooter = document.createElement("div");
-    cardFooter.setAttribute("class", "list-card-footer border-top border-dark text-end");
+    cardFooter.setAttribute("class", "list-card-footer border-dark text-end");
 
     let addListItemButton = document.createElement("button");
     addListItemButton.setAttribute("class", "btn btn-outline-dark add-item-button");
@@ -90,6 +103,10 @@ async function insertListCard(list) {
     card.appendChild(cardFooter);
 
     listContainer.appendChild(card);
+}
+
+function dePopulateUserLists() {
+    listContainer.innerHTML = null;
 }
 
 async function populateUserLists() {
@@ -106,5 +123,7 @@ async function populateUserLists() {
 }
 
 window.addEventListener('load', async (event) => {
-    await populateUserLists();
+    setTimeout(async () => {
+        await populateUserLists();
+    }, 500);
 })
