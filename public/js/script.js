@@ -1,5 +1,10 @@
 let listContainer = document.getElementById("list-row");
 
+const newListButton = document.getElementById("new-list-button");
+newListButton.addEventListener('click', async () => {
+    await addList();
+})
+
 async function sendRequest(path) {
     return await (await fetch(path, {
         method: "GET",
@@ -16,17 +21,32 @@ async function getLists() {
 async function addListItem(listID) {
     const itemName = prompt("Input the item name");
 
-    if (itemName === null) {
-        return
-    }
-
+    if (itemName === null) {return}
     console.log(await sendRequest(`/add-list-item?listID=${listID}&itemName=${itemName}`));
+    await resetUserLists();
+}
+
+async function addList() {
+    const listName = prompt("Input the item name");
+
+    if (listName === null) {return}
+    console.log(await sendRequest(`/add-list?listName=${listName}`));
     await resetUserLists();
 }
 
 // Toggles a list item checkbox
 async function toggleListItem(listID, listItemID, isDone) {
     console.log(await sendRequest(`/toggle-list-item?listID=${listID}&listItemID=${listItemID}&isDone=${isDone}`));
+}
+
+async function deleteListItem(listID, listItemID) {
+    console.log(await sendRequest(`/delete-list-item?listID=${listID}&listItemID=${listItemID}`));
+    await resetUserLists();
+}
+
+async function deleteList(listID) {
+    console.log(await sendRequest(`/delete-list?listID=${listID}`));
+    await resetUserLists();
 }
 
 // Inserts a new list card
@@ -37,12 +57,39 @@ async function insertListCard(list) {
 
     let cardHeader = document.createElement("div");
     cardHeader.setAttribute("class", "card-header bg-dark text-white");
+    cardHeader.style.position = "relative";
 
     let cardTitle = document.createElement("h5");
     cardTitle.setAttribute("class", "card-title text-center");
     cardTitle.innerText = list.name;
 
+
+    let listDeleteButtonContainer = document.createElement("div");
+    listDeleteButtonContainer.setAttribute("class", "d-inline text-center xmark-container");
+
+    let listDeleteButton = document.createElement("i");
+    listDeleteButton.setAttribute("class", "fa-regular fa-circle-xmark delete-button");
+    listDeleteButton.style.visibility = "hidden";
+
+    listDeleteButtonContainer.appendChild(listDeleteButton);
+
+    listDeleteButtonContainer.addEventListener('click', async(event) => {
+        const listID = list._id;
+
+        await deleteList(listID);
+    });
+
+    listDeleteButtonContainer.addEventListener('mouseover', (event) => {
+        listDeleteButton.style.visibility = "visible"
+    });
+
+    listDeleteButtonContainer.addEventListener('mouseout', (event) => {
+        listDeleteButton.style.visibility = "hidden"
+    })
+
+
     cardHeader.appendChild(cardTitle);
+    cardHeader.appendChild(listDeleteButtonContainer);
     card.appendChild(cardHeader);
 
     let listOfItemsBox = document.createElement("div");
@@ -58,6 +105,7 @@ async function insertListCard(list) {
     list.listItems.forEach((item, index) => {
         let listItem = document.createElement("li");
         listItem.setAttribute("class", "list-group-item");
+        listItem.style.position = "relative";
 
         let listItemForm = document.createElement("div");
         listItemForm.setAttribute("class", "form-check");
@@ -86,8 +134,36 @@ async function insertListCard(list) {
         listItemLabel.setAttribute("for", String(list.name + index));
         listItemLabel.innerText = item.name
 
+
+        let listItemXMarkButtonContainer = document.createElement("div");
+        listItemXMarkButtonContainer.setAttribute("class", "d-inline text-center float-end xmark-container");
+
+        let listItemXMarkButton = document.createElement("i");
+        listItemXMarkButton.setAttribute("class", "fa-regular fa-circle-xmark delete-button");
+        listItemXMarkButton.style.visibility = "hidden";
+
+        listItemXMarkButtonContainer.appendChild(listItemXMarkButton);
+
+        listItemXMarkButtonContainer.addEventListener('click', async(event) => {
+            const listID = list._id;
+            const listItemID = item._id;
+
+            await deleteListItem(listID, listItemID);
+        });
+
+        listItemXMarkButtonContainer.addEventListener('mouseover', (event) => {
+            listItemXMarkButton.style.visibility = "visible"
+        });
+
+        listItemXMarkButtonContainer.addEventListener('mouseout', (event) => {
+            listItemXMarkButton.style.visibility = "hidden"
+        })
+
+
         listItemForm.appendChild(listItemCheckBox);
         listItemForm.appendChild(listItemLabel);
+        listItemForm.appendChild(listItemXMarkButtonContainer)
+
 
         listItem.appendChild(listItemForm);
 
@@ -103,15 +179,17 @@ async function insertListCard(list) {
     card.appendChild(listOfItemsBox);
 
     let cardFooter = document.createElement("div");
-    cardFooter.setAttribute("class", "list-card-footer border-dark text-end");
+    cardFooter.setAttribute("class", "list-card-footer border-dark");
 
     let addListItemButton = document.createElement("button");
-    addListItemButton.setAttribute("class", "btn btn-outline-dark add-item-button");
+    addListItemButton.setAttribute("class", "btn btn-outline-dark add-item-button float-end");
     addListItemButton.innerHTML = `<i class="fa-regular fa-plus"></i>`;
 
     addListItemButton.addEventListener('click', (event) => {
         addListItem(list._id);
     })
+
+    // addListItemButtonContainer.appendChild(addListItemButton);
 
     cardFooter.appendChild(addListItemButton);
 

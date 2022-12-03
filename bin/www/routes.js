@@ -45,5 +45,33 @@ export class routes {
 
             res.send(await database.addListItem(listID, itemName));
         })
+
+        app.get('/delete-list-item', async (req, res) => {
+            res.status(200);
+            res.type('json');
+
+            const listID = new ObjectId(req.query.listID);
+            const listItemID = new ObjectId(req.query.listItemID);
+
+            res.send(await database.deleteListItem(listID, listItemID));
+        })
+
+        app.get('/delete-list', async (req, res) => {
+            res.status(200);
+            res.type('json');
+
+            const listID = new ObjectId(req.query.listID);
+
+            res.send(await database.deleteList(listID));
+        })
+
+        app.get('/add-list', async (req, res) => {
+            res.status(200);
+            res.type('json');
+
+            const listName = req.query.listName;
+
+            res.send(await database.addList(listName));
+        })
     }
 }

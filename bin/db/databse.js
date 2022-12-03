@@ -1,7 +1,7 @@
 import {MongoClient, ObjectId} from "mongodb";
 
 export class database {
-    static #uri = "mongodb://admin:Posiedon4life@10.31.189.2:27017/?authMechanism=DEFAULT&authSource=admin";
+    static #uri = process.env.mongoDBURI;
 
     static #client = new MongoClient(this.#uri);
 
@@ -44,5 +44,30 @@ export class database {
             }
         )
     }
-}
 
+    static async addList(listName) {
+        return await this.listsCollection.insertOne({
+            name: listName,
+            listItems: new Array()
+        })
+    }
+
+    static async deleteListItem(listID, listItemID) {
+        return await this.listsCollection.updateOne(
+            {
+                _id: listID
+            },
+            {
+                $pull: {"listItems": {_id: listItemID}}
+            }
+        )
+    }
+
+    static async deleteList(listID) {
+        return await this.listsCollection.deleteOne(
+            {
+                _id: listID
+            }
+        )
+    }
+}
