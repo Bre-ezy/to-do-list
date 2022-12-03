@@ -1,5 +1,5 @@
 import express from "express";
-import {createRoutes} from "./routes.js";
+import {routes} from "./routes.js";
 
 
 export class server {
@@ -7,7 +7,7 @@ export class server {
     static #port = process.env.port;
 
     static initialize() {
-        createRoutes(this.#app);
+        routes.createRoutes(this.#app);
 
         this.#app.set('view engine', 'ejs');
 

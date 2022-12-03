@@ -1,13 +1,20 @@
-export function createRoutes(app) {
+import {database} from "../db/databse.js";
 
-    //Index page
-    app.get('/', (req, res) => {
+export class routes {
+    static createRoutes(app) {
 
-        res.render('pages/index')
-    })
+        //Index page
+        app.get('/', (req, res) => {
+            res.status(200);
+            res.render('pages/index')
+        })
 
-    //About page
-    app.get('about', (req, res) => {
-        res.render('')
-    })
+        //Get lists
+        app.get('/lists', async (req, res) => {
+            const lists = await database.getLists()
+            res.status(200);
+            res.type('json');
+            res.send(JSON.stringify(lists));
+        })
+    }
 }
