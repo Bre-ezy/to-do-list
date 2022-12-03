@@ -4,7 +4,7 @@ import {routes} from "./routes.js";
 
 export class server {
     static #app = express();
-    static #port = process.env.port;
+    static #port = process.env.PORT;
 
     static initialize() {
         routes.createRoutes(this.#app);
