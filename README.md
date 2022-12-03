@@ -1,2 +1,2 @@
-# to-do-list
-Simple to to-do-list application
+# Checklist
+Simple to checklist application
