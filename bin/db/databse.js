@@ -1,9 +1,9 @@
 import {MongoClient, ObjectId} from "mongodb";
 
 export class database {
-    static #uri = process.env.mongoDBURI;
+    static uri = process.env.mongoDBURI;
 
-    static #client = new MongoClient(this.#uri);
+    static #client = new MongoClient(this.uri);
 
     static #db = this.#client.db("to-do-list");
 
