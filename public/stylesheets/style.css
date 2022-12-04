@@ -39,6 +39,10 @@
     overflow: scroll;
 }
 
+.list-items::-webkit-scrollbar {
+    display: none;
+}
+
 .list-card-footer {
     padding: 10px 5px;
 }
