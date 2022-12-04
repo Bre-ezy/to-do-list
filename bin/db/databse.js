@@ -1,14 +1,27 @@
 import {MongoClient, ObjectId} from "mongodb";
 
 export class database {
-    static uri = process.env.mongoDBURI;
 
-    static #client = new MongoClient(this.uri);
+    static uri;
 
-    static #db = this.#client.db("to-do-list");
+    static #client;
 
-    static listsCollection = this.#db.collection('lists');
+    static #db;
 
+    static listsCollection
+
+    // Initializes the MongoDB connection
+    static async initialize() {
+        this.uri = process.env.mongoDBURI;
+
+        this.#client = new MongoClient(this.uri);
+
+        this.#db = this.#client.db("to-do-list");
+
+        this.listsCollection = this.#db.collection('lists');
+    }
+
+    // Returns an array of saved checklists
     static async getLists() {
         const listArrayCursor = await this.listsCollection.find();
 
@@ -21,6 +34,7 @@ export class database {
         return await listArrayCursor.toArray();
     }
 
+    // Toggles the list item between checked and unchecked
     static async toggleListItem(listID, listItemID, isDone) {
 
         return await this.listsCollection.updateOne(
@@ -34,6 +48,7 @@ export class database {
         )
     }
 
+    // Adds a new item to a checklist
     static async addListItem(listID, itemName) {
         return await this.listsCollection.updateOne(
             {
@@ -45,13 +60,15 @@ export class database {
         )
     }
 
+    // Creates a new checklist
     static async addList(listName) {
         return await this.listsCollection.insertOne({
             name: listName,
-            listItems: new Array()
+            listItems: []
         })
     }
 
+    // Deletes an item from a checklist
     static async deleteListItem(listID, listItemID) {
         return await this.listsCollection.updateOne(
             {
@@ -63,6 +80,7 @@ export class database {
         )
     }
 
+    // Deletes a checklist
     static async deleteList(listID) {
         return await this.listsCollection.deleteOne(
             {
