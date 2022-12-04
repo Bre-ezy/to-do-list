@@ -1,2 +1,2 @@
 # Checklist
-Simple to checklist application
+Simple checklist application
