@@ -56,7 +56,7 @@ async function insertListCard(list) {
     card.setAttribute("style", "width: 18rem");
 
     let cardHeader = document.createElement("div");
-    cardHeader.setAttribute("class", "card-header bg-dark text-white");
+    cardHeader.setAttribute("class", "card-header bg-danger text-white");
     cardHeader.style.position = "relative";
 
     let cardTitle = document.createElement("h5");
@@ -69,7 +69,7 @@ async function insertListCard(list) {
 
     let listDeleteButton = document.createElement("i");
     listDeleteButton.setAttribute("class", "fa-regular fa-circle-xmark delete-button");
-    listDeleteButton.style.visibility = "hidden";
+
 
     listDeleteButtonContainer.appendChild(listDeleteButton);
 
@@ -79,15 +79,7 @@ async function insertListCard(list) {
         await deleteList(listID);
     });
 
-    listDeleteButtonContainer.addEventListener('mouseover', (event) => {
-        listDeleteButton.style.visibility = "visible"
-    });
-
-    listDeleteButtonContainer.addEventListener('mouseout', (event) => {
-        listDeleteButton.style.visibility = "hidden"
-    })
-
-
+    
     cardHeader.appendChild(cardTitle);
     cardHeader.appendChild(listDeleteButtonContainer);
     card.appendChild(cardHeader);
@@ -140,7 +132,6 @@ async function insertListCard(list) {
 
         let listItemXMarkButton = document.createElement("i");
         listItemXMarkButton.setAttribute("class", "fa-regular fa-circle-xmark delete-button");
-        listItemXMarkButton.style.visibility = "hidden";
 
         listItemXMarkButtonContainer.appendChild(listItemXMarkButton);
 
@@ -150,15 +141,6 @@ async function insertListCard(list) {
 
             await deleteListItem(listID, listItemID);
         });
-
-        listItemXMarkButtonContainer.addEventListener('mouseover', (event) => {
-            listItemXMarkButton.style.visibility = "visible"
-        });
-
-        listItemXMarkButtonContainer.addEventListener('mouseout', (event) => {
-            listItemXMarkButton.style.visibility = "hidden"
-        })
-
 
         listItemForm.appendChild(listItemCheckBox);
         listItemForm.appendChild(listItemLabel);
@@ -221,7 +203,5 @@ async function resetUserLists() {
 }
 
 window.addEventListener('load', async (event) => {
-    setTimeout(async () => {
-        await populateUserLists();
-    }, 500);
+    await populateUserLists();
 })
