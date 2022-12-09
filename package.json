@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/evilNavyBird/to-do-list.git"
+    "url": "git+https://github.com/Bre-ezy/to-do-list.git"
   },
-  "author": "Edidiong Ben",
+  "author": "Clinton",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/evilNavyBird/to-do-list/issues"
+    "url": "https://github.com/Bre-ezy/to-do-list/issues"
   },
-  "homepage": "https://github.com/evilNavyBird/to-do-list#readme",
+  "homepage": "https://github.com/Bre-ezy/to-do-list#readme",
   "dependencies": {
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.2",
