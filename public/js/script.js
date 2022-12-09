@@ -161,10 +161,10 @@ async function insertListCard(list) {
     card.appendChild(listOfItemsBox);
 
     let cardFooter = document.createElement("div");
-    cardFooter.setAttribute("class", "list-card-footer border-dark");
+    cardFooter.setAttribute("class", "list-card-footer border-danger");
 
     let addListItemButton = document.createElement("button");
-    addListItemButton.setAttribute("class", "btn btn-outline-dark add-item-button float-end");
+    addListItemButton.setAttribute("class", "btn btn-outline-danger add-item-button float-end");
     addListItemButton.innerHTML = `<i class="fa-regular fa-plus"></i>`;
 
     addListItemButton.addEventListener('click', (event) => {
